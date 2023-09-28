@@ -1,0 +1,53 @@
+# Informacoes sobre o kafkacat/kcat: https://github.com/edenhill/kcat
+trigger:
+- main
+
+variables:
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+  
+  # Testes com o Apache Kafka
+  testsDirectory: './Tests'
+
+stages:
+  - stage: Tests
+    displayName: Tests stage
+    variables:
+      - group: kafka-configurations
+    jobs:
+    - job: Testes
+      displayName: Testes de Carga com Apache Kafka
+      pool:
+        vmImage: $(vmImageName)
+      steps:
+        - script: sudo apt-get install kafkacat
+          displayName: Instalar o kcat/kafkacat
+        - script: |
+            echo '***** kafkacat -V *****'
+            kafkacat -V
+            echo '***** kafkacat -h *****'
+            kafkacat -h
+          displayName: Verificar instalação do kcat/kafkacat
+        - script: |
+            echo '***** Enviando mensagens para o Apache Kafka *****'
+            
+            # Função para executar o kcat/kafkacat
+            executar_comando() {
+              dataContagem='{"valorAtual": '$(date +%M%S%3N)', "producer": "azdevops + bash", "kernel": "'$(vmImageName)'", "framework": "kafkacat", "mensagem": "Utilizando o kafkacat em teste de carga"}'	
+              echo $dataContagem | \
+                kafkacat -b $(BrokerKafkaAzure) -t $(TopicName) \
+                  -X security.protocol=SASL_SSL -X sasl.mechanisms=PLAIN \
+                  -X sasl.username='$ConnectionString' -X sasl.password='$(ConnectionStringKafkaAzure)' -P
+              echo $dataContagem
+            }
+    
+            # Exporte a função para que ela possa ser chamada pelo parallel
+            export -f executar_comando
+    
+            for i in {1..$(IteracoesEnvio)}; do
+              # Executa o comando em paralelo
+              seq $(UsuarioSimultaneos) | parallel -j $(UsuarioSimultaneos) executar_comando
+              echo '['$(TZ=America/Sao_Paulo date +%H:%M:%S)'] '$(UsuarioSimultaneos)' mensagem(ns) enviada(s)'
+            done
+          displayName: Enviar mensagens para o Apache Kafka no Azure Event Hubs

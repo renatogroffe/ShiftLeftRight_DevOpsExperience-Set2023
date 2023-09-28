@@ -1,0 +1,15 @@
+# @name orquestrador
+GET http://localhost:6001/orquestracao
+Content-Type: application/json
+
+###
+
+# @name contagemredis
+GET http://localhost:6300/contador
+Content-Type: application/json
+
+###
+
+# @name contagemkafka
+GET http://localhost:6900/contador
+Content-Type: application/json

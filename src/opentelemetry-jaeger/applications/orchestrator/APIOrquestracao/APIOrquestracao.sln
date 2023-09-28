@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34004.107
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIOrquestracao", "APIOrquestracao.csproj", "{DFAC1C1E-D99C-47EA-B0CD-790A3768EB01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DFAC1C1E-D99C-47EA-B0CD-790A3768EB01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFAC1C1E-D99C-47EA-B0CD-790A3768EB01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFAC1C1E-D99C-47EA-B0CD-790A3768EB01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFAC1C1E-D99C-47EA-B0CD-790A3768EB01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B538E5A-0BE1-4D2E-B515-86615091D0B9}
+	EndGlobalSection
+EndGlobal
